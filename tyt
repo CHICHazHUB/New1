@@ -1,0 +1,54 @@
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "CHiChAzHUB",
+    LoadingTitle = "CHiChAzHUB",
+    LoadingSubtitle = "by ChicHAz",
+    ConfigurationSaving = {
+       Enabled = true,
+       FolderName = nil, -- Create a custom folder for your hub/game
+       FileName = "CHiChAzHUB"
+    },
+    Discord = {
+       Enabled = false,
+       Invite = "sirius", -- The Discord invite code, do not include discord.gg/
+       RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+    },
+    KeySystem = false, -- Set this to true to use our key system
+    KeySettings = {
+       Title = "CHiChAzHUB",
+       Subtitle = "Key System",
+       Note = "Join the discord (discord.gg/7FRdCNJjxW)",
+       FileName = "SiriusKey",
+       SaveKey = true,
+       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+       Key = "KIMONOTO"
+    }
+ })
+
+ local Tab = Window:CreateTab("Plant Options", 4483362458) -- Title, Image
+
+ local Section = Tab:CreateSection("Plant Options",true) -- The 2nd argument is to tell if its only a Title and doesnt contain elements
+
+ local Toggle = Tab:CreateToggle({
+    Name = "InstaPlant",
+    Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
+    CurrentValue = false,
+    Flag = "waterplantFlag", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(v)
+        getgenv().waterPlant = v
+            if v == true then
+                while getgenv().waterPlant do task.wait(0.1)
+                    local Remote = game.ReplicatedStorage.Network.Instancing_InvokeCustomFromClient
+                for i = 1, 10 do
+        Remote:InvokeServer("FlowerGarden", "PlantSeed", i, "Diamond")
+        Remote:InvokeServer("FlowerGarden", "InstaGrowSeed", i)
+        Remote:InvokeServer("FlowerGarden", "ClaimPlant", i)
+                 end
+
+                end
+        end
+    end,
+ })
+
+ Rayfield:LoadConfiguration()
